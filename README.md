@@ -1,1 +1,1 @@
-# user-databaseThis is the related [slides](https://docs.google.com/presentation/d/1U2M55zudbAxALyDb9wZQvowsA-rmLEGXQNUcMQTOImQ/edit#slide=id.p)
+# user-databaseThis is the related [slides](https://docs.google.com/presentation/d/1U2M55zudbAxALyDb9wZQvowsA-rmLEGXQNUcMQTOImQ/edit#slide=id.p)The userdatabase.py is a python module for manipulate user database. In the module, the two classes, UserDBReader and UserDBWriter, are provided. We also provide the unittest to test and illustrate the usage of this module.How to execute unittest: ./test_userdb.py

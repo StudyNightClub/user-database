@@ -136,7 +136,6 @@ class UserDBReader(object):
         '''
         Return a list of all users in db.
         '''
-        #print(self.db.dump())
         users = []
         for row in self.db.dump():
             users.append(row['id'])
@@ -191,7 +190,6 @@ class UserDBWriter(object):
         if def_keys:
             raise KeyError('keys [{}] are not assigned'.format(def_keys))
 
-        #import IPython;IPython.embed()
         self.db.insert_row(user_dict)
 
     def update_user(self, user_dict):
@@ -201,7 +199,7 @@ class UserDBWriter(object):
         '''
         def_keys = list(get_default_row().keys())
         user_keys = user_dict.keys()
-        
+
         for key in user_keys:
             if key in def_keys:
                 def_keys.remove(key)

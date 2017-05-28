@@ -8,7 +8,6 @@ class TestUserDB(unittest.TestCase):
     db_path = 'unittest.db'
 
     def setUp(self):
-        print('test setup')
         if os.path.exists(self.db_path):
             os.unlink(self.db_path)
 
@@ -32,7 +31,7 @@ class TestUserDB(unittest.TestCase):
             row = reader.get_user(user_id)
             self.assertTrue(row)
 
-    def test_writer_updateuser(self):
+    def test_updateuser(self):
         user_id = 'user_id_1'
         row = userdatabase.get_default_row()
         row['id'] = user_id
