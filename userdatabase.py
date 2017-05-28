@@ -29,9 +29,11 @@ def get_default_row():
 class DBHandler(object):
     # FIXME Here we used a user_dict of list to standfor user_db
     # json dump & load is a temporary replacement for sqlite db command
-    db = []
-    db_path = ''
-    db_opened = False
+
+    def __init__(self):
+        self.db = []
+        self.db_path = ''
+        self.db_opened = False
 
     def open(self, db_path):
         self.db_path = db_path
@@ -61,6 +63,14 @@ class DBHandler(object):
         if type(row) is not dict:
             raise TypeError('inpur row is not a type of dict')
         self.db.append(row)
+
+    def delete_row(self, key, val):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        for row in self.db:
+            if val == row[key]:
+                self.db.remove(row)
 
     def update(self, update_key, update_value, where_key, where_value):
         if not self.db_opened:
@@ -94,11 +104,9 @@ class DBHandler(object):
             raise IOError('please open db first.')
 
         for row in self.db:
-            print('==========')
+            print('---')
             for key, val in row.items():
                 print('{}: {}'.format(key, val))
-
-db = DBHandler()
 
 
 class UserDBReader(object):
@@ -111,22 +119,37 @@ class UserDBReader(object):
         Initialize object with a db_path.
         If db is not exist, raise IOError.
         '''
+        if not os.path.exists(db_path):
+            raise IOError('db_path [{}] is not esxit'.format(db_path))
+
         self.db_path = db_path
-        pass
+        self.db = DBHandler()
+
+    def __enter__(self):
+        self.db.open(self.db_path)
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self.db.close()
 
     def list_all_user(self):
         '''
         Return a list of all users in db.
         '''
-        pass
+        #print(self.db.dump())
+        users = []
+        for row in self.db.dump():
+            users.append(row['id'])
+        return users
 
     def get_user(self, user_id):
         '''
         Get a user dict by givin a user id.
         If user id is not exist, return None, else return user_dict
         '''
-        pass
-
+        for row in self.db.dump():
+            if user_id == row['id']:
+                return row
 
 class UserDBWriter(object):
     '''
@@ -140,44 +163,71 @@ class UserDBWriter(object):
         If db_path is None, raise ValueError.
         '''
         if not db_path:
-            raise IOError('db_path=[{}] not exist'.format(db_path))
+            raise IOError('db_path [{}] is empty')
 
         self.db_path = db_path
+        self.db = DBHandler()
 
-    def create_db(self):
-        '''
-        Create an empty databasa.
-        If db has already exist, raise IOError.
-        '''
-        if os.path.exists(self.db_path):
-            raise IOError('db [{}] already exist'.format(self.db_path))
+    def __enter__(self):
+        self.db.open(self.db_path)
+        return self
 
+    def __exit__(self, type, value, traceback):
+        self.db.close()
 
-    def add_user(self):
+    def add_user(self, user_dict):
         '''
         Add a new user into db by a user dict.
         '''
-        pass
+        def_keys = list(get_default_row().keys())
+        user_keys = user_dict.keys()
+
+        for key in user_keys:
+            if key in def_keys:
+                def_keys.remove(key)
+            else:
+                raise KeyError('key [{}] is not belong user_dict'.format(key))
+
+        if def_keys:
+            raise KeyError('keys [{}] are not assigned'.format(def_keys))
+
+        #import IPython;IPython.embed()
+        self.db.insert_row(user_dict)
 
     def update_user(self, user_dict):
         '''
         Update a user data by user dict. Only update the exist keys.
         If key is not on the user_dict format, then raise KeyError.
         '''
-        pass
+        def_keys = list(get_default_row().keys())
+        user_keys = user_dict.keys()
+        
+        for key in user_keys:
+            if key in def_keys:
+                def_keys.remove(key)
+            else:
+                raise KeyError('key [{}] is not belong user_dict'.format(key))
+
+        user_id = user_dict['id']
+        for key, val in user_dict.items():
+            if 'id' == key:
+                continue
+            self.db.update(key, val, 'id', user_id)
 
     def remove_user(self, user_id):
         '''
         Remove user from db by a user id.
         If user is not exist, raise ValueError.
         '''
-        pass
+        self.db.delete_row('id', user_id)
 
 
 if '__main__' == __name__:
     print('main test')
 
     print('=============')
+
+    db = DBHandler()
 
     print('test db open')
     db.open('test.db')
@@ -187,8 +237,8 @@ if '__main__' == __name__:
 
     db.open('test.db')
 
-    row1 = {'a':1, 'b':2, 'c':3}
-    row2 = {'a':11, 'b':22, 'c':33}
+    row1 = {'id':'aa', 'b':2, 'c':3}
+    row2 = {'id':'bb', 'b':22, 'c':33}
 
     print('test insert row')
     db.insert_row(row1)
@@ -198,17 +248,23 @@ if '__main__' == __name__:
     db.insert_row(row2)
     db.print()
 
-    print('test update key a to xx where b is 2')
-    db.update('a', 'xx', 'b', 2)
+    print('test update key b to 222222 where id is aa')
+    db.update('b', '2222222', 'id', 'aa')
     db.print()
 
     print('test quert key a where b is 22')
-    print(db.query('a', 'b', 22))
+    print(db.query('b', 'id', 'aa'))
 
     print('test dump')
     print(db.dump())
 
+    print('test remove')
+    db.delete_row('id', 'aa')
+    print(db.dump())
+
     db.close()
+
+    print('=============')
 
 
 
