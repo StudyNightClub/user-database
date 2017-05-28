@@ -4,15 +4,10 @@ import os
 import json
 import sqlite3
 
-# FIXME Here we used a user_dict of list to standfor user_db
-# json dump & load is a temporary replacement for sqlite db command
-user_db = []
-
 def get_default_row():
     '''
     return a dict with default keys and values to represent a user data row
     '''
-
     return {
             'id': '',
             'name': '',
@@ -29,6 +24,82 @@ def get_default_row():
             'filter_on': True,
             'active_nofity': '17:00',
     }
+
+
+class DBHandler(object):
+    # FIXME Here we used a user_dict of list to standfor user_db
+    # json dump & load is a temporary replacement for sqlite db command
+    db = []
+    db_path = ''
+    db_opened = False
+
+    def open(self, db_path):
+        self.db_path = db_path
+
+        if not os.path.exists(self.db_path):
+            with open(self.db_path, 'w') as f:
+                json.dump(self.db, f)
+        else:
+            with open(self.db_path, 'r') as f:
+                self.db = json.load(f)
+
+        self.db_opened = True
+
+    def close(self):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        with open(self.db_path, 'w') as f:
+            json.dump(self.db, f)
+
+        self.db_opened = False
+
+    def insert_row(self, row):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        if type(row) is not dict:
+            raise TypeError('inpur row is not a type of dict')
+        self.db.append(row)
+
+    def update(self, update_key, update_value, where_key, where_value):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        for row in self.db:
+            if where_value == row[where_key]:
+                row[update_key] = update_value
+                return True
+        else:
+            return False
+
+    def query(self, query_key, where_key, where_value):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        for row in self.db:
+            if where_value == row[where_key]:
+                return row[query_key]
+        else:
+            return None
+
+    def dump(self):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        return self.db
+
+    def print(self):
+        if not self.db_opened:
+            raise IOError('please open db first.')
+
+        for row in self.db:
+            print('==========')
+            for key, val in row.items():
+                print('{}: {}'.format(key, val))
+
+db = DBHandler()
+
 
 class UserDBReader(object):
     '''
@@ -68,15 +139,19 @@ class UserDBWriter(object):
         Initialize object with a db_path
         If db_path is None, raise ValueError.
         '''
+        if not db_path:
+            raise IOError('db_path=[{}] not exist'.format(db_path))
+
         self.db_path = db_path
-        pass
 
     def create_db(self):
         '''
         Create an empty databasa.
         If db has already exist, raise IOError.
         '''
-        pass
+        if os.path.exists(self.db_path):
+            raise IOError('db [{}] already exist'.format(self.db_path))
+
 
     def add_user(self):
         '''
@@ -101,25 +176,39 @@ class UserDBWriter(object):
 
 if '__main__' == __name__:
     print('main test')
-    row = get_default_row()
-    for key, val in row.items():
-        print('{}: {}'.format(key, val))
 
-    row['subscribe_type'] = 'elec'
-    print(row['subscribe_type'])
+    print('=============')
 
+    print('test db open')
+    db.open('test.db')
+    db.print()
+    print('test db close')
+    db.close()
 
+    db.open('test.db')
 
+    row1 = {'a':1, 'b':2, 'c':3}
+    row2 = {'a':11, 'b':22, 'c':33}
 
+    print('test insert row')
+    db.insert_row(row1)
+    db.print()
 
+    print('test insert row')
+    db.insert_row(row2)
+    db.print()
 
+    print('test update key a to xx where b is 2')
+    db.update('a', 'xx', 'b', 2)
+    db.print()
 
+    print('test quert key a where b is 22')
+    print(db.query('a', 'b', 22))
 
+    print('test dump')
+    print(db.dump())
 
-
-
-
-
+    db.close()
 
 
 
