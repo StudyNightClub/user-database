@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Enter names in the fields, then click "Submit" to submit the form:</p>
+
+<html>
+<head><title>test</title></head>
+<body>
+
+<form action="myurl" method="POST" name="myForm" id="myForm" type="hidden">
+	<p><label for="first_name">First Name:</label>
+	<input type="text" name="first_name" id="fname"></p>
+	<p><label for="last_name">Last Name:</label>
+	<input type="text" name="last_name" id="lname"></p>
+	<br>
+	<input value="Submit" type="button" onclick="submitform()">
+</form>
+
+<form action="https://www.google.com.tw/" method="POST" name="postForm" id="postForm" type="hidden">
+    <textarea id="postTextarea" name="jsondump" style="display:none;">This text gets removed</textarea>
+</form>
+</body>
+</html>
+<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+function submitform() {
+    console.log("into submitform function");
+    var x = JSON.stringify($("#myForm").serializeArray());
+    document.getElementById("postTextarea").value = x;
+    document.getElementById("postForm").submit();
+}
+</script>
+
+</body>
+</html>
+
