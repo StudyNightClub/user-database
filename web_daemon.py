@@ -33,36 +33,71 @@ def hello(name=None):
 
 
 from flask import Flask, session, redirect, url_for, escape, request
+import userdatabase
+import json
 
 app = Flask(__name__)
 
+db_path = 'userdata.db'
+
 @app.route('/')
 def index():
-    if 'username' in session:
-        return 'Logged in as %s' % escape(session['username'])
-    return 'You are not logged in'
+    return 'Index Page'
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('index'))
-    return '''
-            <form action="" method="post">
-                <p><input type=text name=username>
-                <p><input type=submit value=Login>
-            </form>
-            '''
+@app.route('/setting/<user_id>', methods=['GET', 'POST', 'PUT'])
+def setting(user_id):
+    if request.method == 'GET':
+        with open('setting_web.html', 'r') as f:
+            web = f.read()
+        return web
+    elif request.method == 'POST':
+        print('request:')
+        print(request.form)
+        return 'POSTED'
+    else:
+        return 'not support method=[%s]'.format(request.method)
 
-@app.route('/logout')
-def logout():
-        # remove the username from the session if it's there
-    session.pop('username', None)
-    return redirect(url_for('index'))
+@app.route('/user/<user_id>', methods=['GET', 'POST', 'PUT'])
+def user(user_id):
+    # check user_id is valid, if not then return error message
 
-# set the secret key.  keep this really secret:
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    if request.method == 'GET':
+        with userdatabase.UserDBReader(db_path) as reader:
+            if '0' == user_id:
+                users = reader.list_all_user()
+                return json.dumps(users)
+            else:
+                row = reader.get_user(user_id)
+                return json.dumps(row)
 
+    elif request.method == 'POST':
+        row  = {}
+        print('This is POST data=[%s]' % request.form['data'])
+        with userdatabase.UserDBReader(db_path) as reader:
+            row = reader.get_user(user_id)
+
+        update_data = json.loads(request.form['data'])
+        row.update(update_data)
+
+        with userdatabase.UserDBWriter(db_path) as writer:
+            writer.update_user(row)
+
+        return 'user_id=[%s] updated=[%s]' % (user_id, json.dumps(row))
+
+    elif request.method == 'PUT':
+        # FIXME put should not user default row
+        row = userdatabase.get_default_row()
+
+        row['id'] = user_id
+
+        print('data=[{}]'.format(request.form))
+        with userdatabase.UserDBWriter(db_path) as writer:
+            writer.add_user(row)
+
+        return 'user_id=[%s] updated=[%s]' % (user_id, json.dumps(row))
+
+    else:
+        return 'not support method=[%s]'.format(request.method)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
