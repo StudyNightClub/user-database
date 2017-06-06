@@ -1,38 +1,6 @@
 #!/usr/local/bin/Python3
 
-from flask import Flask, url_for, render_template
-from flask import render_template, request
-app = Flask(__name__)
-
-'''
-@app.route('/')
-def index():
-    return 'Index Page'
-
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-    # show the post with the given id, the id is an integer
-    return 'Post %d' % post_id
-
-@app.route('/projects/')
-def projects():
-    return 'The project page'
-
-with app.test_request_context():
-    print url_for('index')
-    print url_for('login')
-    print url_for('login', next='/')
-    print url_for('profile', username='John Doe')
-
-
-@app.route('/hello/')
-@app.route('/hello/<name>')
-def hello(name=None):
-    return render_template('hello.html', name=name)
-'''
-
-
-from flask import Flask, session, redirect, url_for, escape, request
+from flask import Flask, session, redirect, url_for, escape, request, render_template
 import userdatabase
 import json
 
@@ -47,9 +15,10 @@ def index():
 @app.route('/setting/<user_id>', methods=['GET', 'POST', 'PUT'])
 def setting(user_id):
     if request.method == 'GET':
-        with open('setting_web.html', 'r') as f:
-            web = f.read()
-        return web
+        user = {}
+        with userdatabase.UserDBReader(db_path) as reader:
+            user = reader.get_user(user_id)
+        return render_template('setting_web.html', user=user)
     elif request.method == 'POST':
         print('request:')
         print(request.form)
@@ -100,7 +69,7 @@ def user(user_id):
         return 'not support method=[%s]'.format(request.method)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=8888, debug=True)
 
 
 

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<head>Click "Submit" to submit the form:</head>
+
+<html>
+<body>
+
+<form action="myurl" method="POST" name="myForm" id="myForm" type="hidden">
+    <input type="hidden" id="id" value="{{user.id}}" ></p>
+
+	<p><label for="name">Name:</label>
+    <input type="text" id="name" value="{{user.name}}"></p>
+
+	<p><label for="interest_city">Interest city:</label>
+    <input type="text" id="interest_city" value="{{user.interest_city}}"></p>
+
+	<p><label for="interest_distinct">Interest distinct:</label>
+    <input type="text" id="interest_distinct" value="{{user.interest_distinct}}"></p>
+
+	<p><label for="interest_road">Interest road:</label>
+    <input type="text" id="interest_road" value="{{user.interest_road}}"></p>
+
+	<p><label for="office_city">office city:</label>
+    <input type="text" id="office_city" value="{{user.office_city}}"></p>
+
+	<p><label for="office_distinct">office distinct:</label>
+    <input type="text" id="office_distinct" value="{{user.office_distinct}}"></p>
+
+	<p><label for="office_road">office road:</label>
+    <input type="text" id="office_road" value="{{user.office_road}}"></p>
+
+	<p><label for="undisturbed_start">Undisturbed time start:</label>
+    <input type="text" id="undisturbed_start" value="{{user.undistrubed_start}}"></p>
+
+	<p><label for="undisturbed_end">Undisturbed time end:</label>
+    <input type="text" id="undisturbed_end" value="{{user.undistrubed_end}}"></p>
+
+	<p><label for="subscribe_type">Subscribe:</label>
+    <input type="text" id="subscribe_type" value="{{user.subscribe_type}}"></p>
+
+	<p><label for="filter_on">Filter:</label>
+    <input type="text" id="filter_on" value="{{user.filter_on}}"></p>
+
+	<p><label for="active_notify">Active notify:</label>
+    <input type="text" id="active_notify" value="{{user.active_notify}}"></p>
+
+	<input value="Submit" type="button" onclick="submitform()">
+</form>
+
+<form action="setting/id" method="POST" name="postForm" id="postForm" type="hidden">
+    <textarea id="postTextarea" name="jsondump" style="display:none;">This text gets removed</textarea>
+</form>
+</body>
+</html>
+<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+function submitform() {
+    console.log("into submitform function");
+    var x = JSON.stringify($("#myForm").serializeArray());
+    document.getElementById("postTextarea").value = x;
+    document.getElementById("postForm").submit();
+}
+</script>
+
+</body>
+</html>
+

@@ -11,18 +11,18 @@ def get_default_row():
     return {
             'id': '',
             'name': '',
-            'home_city': '',
-            'home_distinct': '',
-            'home_road': '',
+            'interest_city': '',
+            'interest_distinct': '',
+            'interest_road': '',
             'office_city': '',
-            'offict_distinct': '',
-            'offict_road': '',
+            'office_distinct': '',
+            'office_road': '',
             'undistrubed_start': '23:00',
             'undistrubed_end': '07:00',
             'subscribe_type': 'all',
             'feedback': '',
             'filter_on': True,
-            'active_nofity': '17:00',
+            'active_notity': '17:00',
     }
 
 
