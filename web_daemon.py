@@ -107,7 +107,30 @@ def user(user_id):
     else:
         return 'not support method=[%s]'.format(request.method)
 
+
+def daemonize(setsid = True):
+    import os, time
+    pid = os.fork()
+    if 0 != pid:
+        time.sleep(1)
+        exit(0)
+
+    if setsid:
+        os.setsid()
+
+    pid = os.fork()
+    if 0 != pid: exit(0)
+
+def setLogger():
+    import logging
+    handler = logging.FileHandler('daemon.log')
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.INFO)
+    log.addHandler(handler)
+
 if __name__ == '__main__':
+    setLogger()
+    daemonize()
     app.run(host='0.0.0.0', port=8888, debug=True)
 
 
