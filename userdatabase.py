@@ -17,12 +17,12 @@ def get_default_row():
             'office_city': '',
             'office_distinct': '',
             'office_road': '',
-            'undistrubed_start': '23:00',
-            'undistrubed_end': '07:00',
+            'undisturbed_start': '23:00',
+            'undisturbed_end': '07:00',
             'subscribe_type': 'all',
             'feedback': '',
             'filter_on': True,
-            'active_notity': '17:00',
+            'active_notify': '17:00',
     }
 
 

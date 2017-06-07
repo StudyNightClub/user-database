@@ -12,17 +12,31 @@ db_path = 'userdata.db'
 def index():
     return 'Index Page'
 
-@app.route('/setting/<user_id>', methods=['GET', 'POST', 'PUT'])
+@app.route('/setting/<user_id>', methods=['GET', 'POST'])
 def setting(user_id):
     if request.method == 'GET':
         user = {}
         with userdatabase.UserDBReader(db_path) as reader:
             user = reader.get_user(user_id)
-        return render_template('setting_web.html', user=user)
+        if user is None:
+            return 'User [{}] is not found'.format(user_id)
+        else:
+            return render_template('setting_web.html', user=user)
     elif request.method == 'POST':
-        print('request:')
-        print(request.form)
-        return 'POSTED'
+        update_data = {}
+        for k in request.form.keys():
+            update_data[k] = request.form[k]
+
+        row = {}
+        with userdatabase.UserDBReader(db_path) as reader:
+            row = reader.get_user(user_id)
+
+        row.update(update_data)
+
+        with userdatabase.UserDBWriter(db_path) as writer:
+            writer.update_user(row)
+
+        return 'user_id=[%s] updated=[%s]' % (user_id, update_data)
     else:
         return 'not support method=[%s]'.format(request.method)
 
@@ -60,8 +74,14 @@ def user(user_id):
         if user_id != user_data['id']:
             return "user_id=[{}] did not match user_data['id']=[{}]".format(user_id, user_data['id'])
 
-        if not set(user_data.keys()) == set(default_row.keys()):
-            return "user_data keys is not match {}".format(user_data.keys())
+        user_data_keys = set(user_data.keys())
+        default_row_keys = set(default_row.keys())
+        if not user_data_keys == default_row_keys:
+            error_keys = []
+            for k in user_data_keys:
+                if k not in default_row_keys:
+                    error_keys.append(k)
+            return "user_data keys is not match {}".format(error_keys)
 
         with userdatabase.UserDBReader(db_path) as reader:
             users = reader.list_all_user()
@@ -71,7 +91,7 @@ def user(user_id):
         with userdatabase.UserDBWriter(db_path) as writer:
             writer.add_user(user_data)
 
-        return 'user [%s] is created' % (user_id, json.dumps(user_data))
+        return 'user [{}] is created'.format(user_id)
 
     elif request.method == 'DELETE':
         with userdatabase.UserDBReader(db_path) as reader:
