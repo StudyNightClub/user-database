@@ -26,9 +26,9 @@ def setting(user_id):
     else:
         return 'not support method=[%s]'.format(request.method)
 
-@app.route('/user/<user_id>', methods=['GET', 'POST', 'PUT'])
+@app.route('/user/<user_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def user(user_id):
-    # check user_id is valid, if not then return error message
+    # check user_id is valid format, if not then return error message
 
     if request.method == 'GET':
         with userdatabase.UserDBReader(db_path) as reader:
@@ -54,16 +54,35 @@ def user(user_id):
         return 'user_id=[%s] updated=[%s]' % (user_id, json.dumps(row))
 
     elif request.method == 'PUT':
-        # FIXME put should not user default row
-        row = userdatabase.get_default_row()
+        user_data = json.loads(request.form['data'])
+        default_row = userdatabase.get_default_row()
 
-        row['id'] = user_id
+        if user_id != user_data['id']:
+            return "user_id=[{}] did not match user_data['id']=[{}]".format(user_id, user_data['id'])
 
-        print('data=[{}]'.format(request.form))
+        if not set(user_data.keys()) == set(default_row.keys()):
+            return "user_data keys is not match {}".format(user_data.keys())
+
+        with userdatabase.UserDBReader(db_path) as reader:
+            users = reader.list_all_user()
+            if user_data['id'] in users:
+                return "user [{}] is already exists".format(user_data['id'])
+
         with userdatabase.UserDBWriter(db_path) as writer:
-            writer.add_user(row)
+            writer.add_user(user_data)
 
-        return 'user_id=[%s] updated=[%s]' % (user_id, json.dumps(row))
+        return 'user [%s] is created' % (user_id, json.dumps(user_data))
+
+    elif request.method == 'DELETE':
+        with userdatabase.UserDBReader(db_path) as reader:
+            users = reader.list_all_user()
+            if user_id not in users:
+                return "user [{}] is not exist".format(user_id)
+
+        with userdatabase.UserDBWriter(db_path) as writer:
+            writer.remove_user(user_id)
+
+        return "user [{}] is deleted".format(user_id)
 
     else:
         return 'not support method=[%s]'.format(request.method)
