@@ -2,18 +2,30 @@
 
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 import userdatabase
+import logging
 import json
 
 app = Flask(__name__)
+log = logging.getLogger('werkzeug')
 
 db_path = 'userdata.db'
 
 @app.route('/')
 def index():
+    if not token_check(request):
+        return 'Permission Insufficient'
+
+    log.debug('request form=[{}]'.format(request.form))
+
     return 'Index Page'
 
 @app.route('/setting/<user_id>', methods=['GET', 'POST'])
 def setting(user_id):
+    if not token_check(request):
+        return 'Permission Insufficient'
+
+    log.debug('request form=[{}]'.format(request.form))
+
     if request.method == 'GET':
         user = {}
         with userdatabase.UserDBReader(db_path) as reader:
@@ -21,7 +33,7 @@ def setting(user_id):
         if user is None:
             return 'User [{}] is not found'.format(user_id)
         else:
-            return render_template('setting_web.html', user=user)
+            return render_template('setting_web.html', user=user, user_token=request.args.get('userToken',''))
     elif request.method == 'POST':
         update_data = {}
         for k in request.form.keys():
@@ -42,7 +54,13 @@ def setting(user_id):
 
 @app.route('/user/<user_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def user(user_id):
-    # check user_id is valid format, if not then return error message
+    if not token_check(request):
+        return 'Permission Insufficient'
+
+    log.debug('request form=[{}]'.format(request.form))
+
+    # FIXME check user_id is valid format, if not then return error message
+
 
     if request.method == 'GET':
         with userdatabase.UserDBReader(db_path) as reader:
@@ -121,17 +139,28 @@ def daemonize(setsid = True):
     pid = os.fork()
     if 0 != pid: exit(0)
 
-def setLogger():
-    import logging
+def set_logger():
+    logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s")
     handler = logging.FileHandler('daemon.log')
     log = logging.getLogger('werkzeug')
-    log.setLevel(logging.INFO)
+    log.setLevel(logging.DEBUG)
     log.addHandler(handler)
 
+def token_load():
+    with open('secret.key', 'r') as f:
+        return f.read().strip()
+
+def token_check(request):
+    user_token = request.args.get('userToken','')
+    if user_token == auth_token:
+        return True
+    else:
+        return False
+
 if __name__ == '__main__':
-    setLogger()
+    auth_token = token_load()
+    set_logger()
     daemonize()
     app.run(host='0.0.0.0', port=8888, debug=True)
-
 
 

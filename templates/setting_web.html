@@ -4,7 +4,7 @@
 
 <head>Click "Submit" to submit the form:</head>
 
-<form action="/setting/{{user.id}}" method="post" name="myForm">
+<form action="/setting/{{user.id}}?userToken={{user_token}}" method="post" name="myForm">
     <input type="hidden" id="id" value="{{user.id}}" >
 
 	<label for="name">Name:</label>
