@@ -12,17 +12,21 @@ def get_default_row():
             'id': '',
             'name': '',
             'interest_city': '',
-            'interest_distinct': '',
+            'interest_district': '',
             'interest_road': '',
             'office_city': '',
-            'office_distinct': '',
+            'office_district': '',
             'office_road': '',
             'undisturbed_start': '23:00',
             'undisturbed_end': '07:00',
-            'subscribe_type': 'all',
+            'subscribe_water': True,
+            'subscribe_electricity': True,
+            'subscribe_road': True,
             'feedback': '',
             'filter_on': True,
             'active_notify': '17:00',
+            # hidden column
+            # longitude, latitude
     }
 
 
