@@ -1,9 +1,11 @@
 #!/usr/local/bin/Python3
 
-from flask import Flask, session, redirect, url_for, escape, request, render_template, send_from_directory
+from flask import Flask, session, redirect, url_for, escape, request, render_template
+from flask import safe_join, make_response
 import userdatabase
 import logging
 import json
+import os
 
 app = Flask(__name__)
 log = logging.getLogger('werkzeug')
@@ -20,9 +22,21 @@ def index():
 
 @app.route('/templates/<path:path>', methods=['GET'])
 def send_template(path):
-    print('request tempate path=[{}]'.format(path))
-    return send_from_directory('/templates', path)
-    pass
+    template_path = safe_join('templates', path)
+    if not os.path.exists(template_path):
+        return 'path not exist = [{}]'.format(template_path)
+
+    content = ''
+    with open(template_path, 'r+b') as f:
+        content = f.read()
+
+    resp = make_response(content)
+    if path.endswith('css'):
+        resp.headers['Content-Type'] = 'text/css'
+    else:
+        resp.headers['Content-Type'] = 'text/html'
+
+    return resp
 
 @app.route('/setting/<user_id>', methods=['GET', 'POST'])
 def setting(user_id):
@@ -141,7 +155,7 @@ def user(user_id):
 
 
 def daemonize(setsid = True):
-    import os, time
+    import os, time, sys
     pid = os.fork()
     if 0 != pid:
         time.sleep(1)
@@ -174,7 +188,7 @@ def token_check(request):
 if __name__ == '__main__':
     auth_token = token_load()
     set_logger()
-    daemonize()
+    #daemonize()
     app.run(host='0.0.0.0', port=8888, debug=True)
 
 
