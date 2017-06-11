@@ -1,6 +1,6 @@
 #!/usr/local/bin/Python3
 
-from flask import Flask, session, redirect, url_for, escape, request, render_template
+from flask import Flask, session, redirect, url_for, escape, request, render_template, send_from_directory
 import userdatabase
 import logging
 import json
@@ -16,8 +16,13 @@ def index():
         return 'Permission Insufficient'
 
     log.debug('request form=[{}]'.format(request.form))
-
     return 'Index Page'
+
+@app.route('/templates/<path:path>', methods=['GET'])
+def send_template(path):
+    print('request tempate path=[{}]'.format(path))
+    return send_from_directory('/templates', path)
+    pass
 
 @app.route('/setting/<user_id>', methods=['GET', 'POST'])
 def setting(user_id):
@@ -86,7 +91,16 @@ def user(user_id):
         return 'user_id=[%s] updated=[%s]' % (user_id, json.dumps(row))
 
     elif request.method == 'PUT':
-        user_data = json.loads(request.form['data'])
+        if not request.form.get('data', ''):
+            return 'get form data fail'
+
+        log.debug('This is PUT data=[%s]' % request.form['data'])
+
+        try:
+            user_data = json.loads(request.form['data'])
+        except Exception as e:
+            return 'fail to json loads = [{}]\n'.format(request.form['data']) + e.msg
+
         default_row = userdatabase.get_default_row()
 
         if user_id != user_data['id']:
@@ -94,12 +108,12 @@ def user(user_id):
 
         user_data_keys = set(user_data.keys())
         default_row_keys = set(default_row.keys())
-        if not user_data_keys == default_row_keys:
-            error_keys = []
-            for k in user_data_keys:
-                if k not in default_row_keys:
-                    error_keys.append(k)
-            return "user_data keys is not match {}".format(error_keys)
+
+        if 'id' not in user_data_keys:
+            return 'input user data is lack of value of id'
+
+        for key in user_data_keys:
+            default_row[key] = user_data[key]
 
         with userdatabase.UserDBReader(db_path) as reader:
             users = reader.list_all_user()
@@ -107,7 +121,7 @@ def user(user_id):
                 return "user [{}] is already exists".format(user_data['id'])
 
         with userdatabase.UserDBWriter(db_path) as writer:
-            writer.add_user(user_data)
+            writer.add_user(default_row)
 
         return 'user [{}] is created'.format(user_id)
 
