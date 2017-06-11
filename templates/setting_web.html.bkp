@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<head>Click "Submit" to submit the form:</head>
+
+<form action="/setting/{{user.id}}?userToken={{user_token}}" method="post" name="myForm">
+    <input type="hidden" id="id" value="{{user.id}}" >
+
+	<label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{user.name}}">
+	<br>
+	<label for="interest_city">Interest city:</label>
+    <input type="text" id="interest_city" name="interest_city" value="{{user.interest_city}}">
+	<br>
+	<label for="interest_distinct">Interest distinct:</label>
+    <input type="text" id="interest_distinct" name="interest_distinct" value="{{user.interest_distinct}}">
+	<br>
+	<label for="interest_road">Interest road:</label>
+    <input type="text" id="interest_road" name="interest_road" value="{{user.interest_road}}">
+	<br>
+	<label for="office_city">office city:</label>
+    <input type="text" id="office_city" name="office_city" value="{{user.office_city}}">
+	<br>
+	<label for="office_distinct">office distinct:</label>
+    <input type="text" id="office_distinct" name="office_distinct" value="{{user.office_distinct}}">
+	<br>
+	<label for="office_road">office road:</label>
+    <input type="text" id="office_road" name="office_road" value="{{user.office_road}}">
+	<br>
+	<label for="undisturbed_start">Undisturbed time start:</label>
+    <input type="text" id="undisturbed_start" name="undisturbed_start" value="{{user.undisturbed_start}}">
+	<br>
+	<label for="undisturbed_end">Undisturbed time end:</label>
+    <input type="text" id="undisturbed_end" name="undisturbed_end" value="{{user.undisturbed_end}}">
+	<br>
+	<label for="subscribe_type">Subscribe:</label>
+    <input type="text" id="subscribe_type" name="subscribe_type" value="{{user.subscribe_type}}">
+	<br>
+	<label for="filter_on">Filter:</label>
+    <input type="text" id="filter_on" name="filter_on" value="{{user.filter_on}}">
+	<br>
+	<label for="active_notify">Active notify:</label>
+    <input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}">
+	<br>
+	<input value="Submit" type="submit">
+</form>
+
+<!--
+<form action="{{user.id}}" method="POST" name="postForm" id="postForm" type="hidden">
+	<textarea id="postTextarea" name="data" style="display:none;">This text gets removed</textarea>
+</form>
+
+<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+function submitform() {
+	console.log("into submitform function");
+	var x = JSON.stringify($("#myForm").serializeArray());
+	document.getElementById("postTextarea").value = x;
+	document.getElementById("postForm").submit();
+}
+</script>
+/-->
+
+
+</body>
+</html>
+

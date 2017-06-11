@@ -1,68 +1,208 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- For bootstrap template -->
+<link rel="stylesheet" href="/templates/css/bootstrap.min.css">
+<script src="/templates/js/jquery-3.2.1.min.js"></script>
+<script src="/templates/js/bootstrap.min.js"></script>
+
+<!-- For bootstrap clockpicker -->
+<link rel="stylesheet" href="/templates/css/bootstrap-clockpicker.css" />
+<link rel="stylesheet" href="/templates/css/bootstrap-clockpicker.min.css" />
+<link rel="stylesheet" href="/templates/css/jquery-clockpicker.css" />
+<link rel="stylesheet" href="/templates/css/jquery-clockpicker.min.css" />
+
+<script src="/templates/js/bootstrap-clockpicker.js"></script>
+<script src="/templates/js/bootstrap-clockpicker.min.js"></script>
+<script src="/templates/js/jquery-clockpicker.js"></script>
+<script src="/templates/js/jquery-clockpicker.min.js"></script>
+
+
 <html>
 <body>
 
-<head>Click "Submit" to submit the form:</head>
+<div class="container">
 
-<form action="/setting/{{user.id}}?userToken={{user_token}}" method="post" name="myForm">
-    <input type="hidden" id="id" value="{{user.id}}" >
+<form class="well form-horizontal" action="/setting/{{user.id}}?userToken={{user_token}}" method="post">
+<fieldset>
 
-	<label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="{{user.name}}">
-	<br>
-	<label for="interest_city">Interest city:</label>
-    <input type="text" id="interest_city" name="interest_city" value="{{user.interest_city}}">
-	<br>
-	<label for="interest_distinct">Interest distinct:</label>
-    <input type="text" id="interest_distinct" name="interest_distinct" value="{{user.interest_distinct}}">
-	<br>
-	<label for="interest_road">Interest road:</label>
-    <input type="text" id="interest_road" name="interest_road" value="{{user.interest_road}}">
-	<br>
-	<label for="office_city">office city:</label>
-    <input type="text" id="office_city" name="office_city" value="{{user.office_city}}">
-	<br>
-	<label for="office_distinct">office distinct:</label>
-    <input type="text" id="office_distinct" name="office_distinct" value="{{user.office_distinct}}">
-	<br>
-	<label for="office_road">office road:</label>
-    <input type="text" id="office_road" name="office_road" value="{{user.office_road}}">
-	<br>
-	<label for="undisturbed_start">Undisturbed time start:</label>
-    <input type="text" id="undisturbed_start" name="undisturbed_start" value="{{user.undisturbed_start}}">
-	<br>
-	<label for="undisturbed_end">Undisturbed time end:</label>
-    <input type="text" id="undisturbed_end" name="undisturbed_end" value="{{user.undisturbed_end}}">
-	<br>
-	<label for="subscribe_type">Subscribe:</label>
-    <input type="text" id="subscribe_type" name="subscribe_type" value="{{user.subscribe_type}}">
-	<br>
-	<label for="filter_on">Filter:</label>
-    <input type="text" id="filter_on" name="filter_on" value="{{user.filter_on}}">
-	<br>
-	<label for="active_notify">Active notify:</label>
-    <input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}">
-	<br>
-	<input value="Submit" type="submit">
+<!-- Form Name -->
+<legend>編輯個人設定</legend>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">暱稱</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	<input type="text" id="name" name="name" value="{{user.name}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">通知區域(市):</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+	<input type="text" id="interest_city" name="interest_city" value="{{user.interest_city}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">通知區域(區):</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+	<input type="text" id="interest_distinct" name="interest_distinct" value="{{user.interest_distinct}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">通知區域(路):</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+	<input type="text" id="interest_road" name="interest_road" value="{{user.interest_road}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">工作區域(市):</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+	<input type="text" id="office_city" name="office_city" value="{{user.office_city}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">工作區域(區):</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+	<input type="text" id="office_distinct" name="office_distinct" value="{{user.office_distinct}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+	<label class="col-md-4 control-label">工作區域(路):</label>  
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+	<input type="text" id="office_road" name="office_road" value="{{user.office_road}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Clock picker -->
+<div class="form-group"> 
+	<label class="col-md-4 control-label">勿擾區間(起始):</label>
+	<div class="col-md-4 selectContainer">
+	<div class="input-group clockpicker">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+	<input type="text" id="undisturbed_start" name="undisturbed_start" value="{{user.undisturbed_start}}" class="form-control">
+	</div>
+	<script type="text/javascript">
+	$('.clockpicker').clockpicker();
+	</script>
+	</div>
+</div>
+
+<!-- Clock picker -->
+<div class="form-group"> 
+	<label class="col-md-4 control-label">勿擾區間(結束):</label>
+	<div class="col-md-4 selectContainer">
+	<div class="input-group clockpicker">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+	<input type="text" id="undisturbed_end" name="undisturbed_end" value="{{user.undisturbed_end}}" class="form-control">
+	</div>
+	<script type="text/javascript">
+	$('.clockpicker').clockpicker();
+	</script>
+	</div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group"> 
+  <label class="col-md-4 control-label">通知類型:</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+    <select id="subscribe_type" name="subscribe_type" value="{{user.subscribe_type}}" class="form-control selectpicker" >
+		<option value="all">全部</option>
+		<option value="water">停水</option>
+		<option value="electricity">停電</option>
+		<option value="road">道路施工</option>
+    </select>
+	</div>
+</div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group"> 
+  <label class="col-md-4 control-label">勿擾時過濾通知:</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
+    <select id="subscribe_type" id="filter_on" name="filter_on" value="{{user.filter_on}}" class="form-control selectpicker" >
+		<option value="false">否</option>
+		<option value="true">是</option>
+    </select>
+	</div>
+</div>
+</div>
+
+<!-- Clock picker -->
+<div class="form-group"> 
+	<label class="col-md-4 control-label">主動通知時間:</label>
+	<div class="col-md-4 selectContainer">
+	<div class="input-group clockpicker">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+	<input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}" class="form-control">
+	</div>
+	<script type="text/javascript">
+	$('.clockpicker').clockpicker();
+	</script>
+	</div>
+</div>
+
+<!-- Text area -->
+<div class="form-group">
+	<label class="col-md-4 control-label">回饋:</label>
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+	<textarea id="feedback" name="feedback" value="{{user.feedback}}" class="form-control"></textarea>
+	</div>
+	</div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+	<label class="col-md-4 control-label"></label>
+	<div class="col-md-4 text-center">
+	<button type="submit" class="btn btn-primary">儲存變更<span class="glyphicon glyphicon-send"></span></button>
+	</div>
+</div>
+
+<!-- Success message -->
+<div class="alert alert-success" role="alert" id="success_message"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div>
+
+</fieldset>
 </form>
-
-<!--
-<form action="{{user.id}}" method="POST" name="postForm" id="postForm" type="hidden">
-	<textarea id="postTextarea" name="data" style="display:none;">This text gets removed</textarea>
-</form>
-
-<script language="JavaScript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-function submitform() {
-	console.log("into submitform function");
-	var x = JSON.stringify($("#myForm").serializeArray());
-	document.getElementById("postTextarea").value = x;
-	document.getElementById("postForm").submit();
-}
-</script>
-/-->
-
+</div><!-- /.container -->
 
 </body>
 </html>
-

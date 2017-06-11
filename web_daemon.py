@@ -188,7 +188,7 @@ def token_check(request):
 if __name__ == '__main__':
     auth_token = token_load()
     set_logger()
-    #daemonize()
-    app.run(host='0.0.0.0', port=8888, debug=True)
+    daemonize()
+    app.run(host='0.0.0.0', port=8888, debug=True, threaded=True)
 
 
