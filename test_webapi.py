@@ -64,12 +64,15 @@ class TestDBReaderWebapi(unittest.TestCase):
         if not user_list:
             raise unittest.SkipTest('No users in db')
 
+        default_db_keys = set(userdatabase.get_default_row().keys())
         for user in user_list:
             msg = send_webapi('GET', '/user/'+user)
             self.assertIsNotNone(msg)
             u = json.loads(msg)
             self.assertIsNotNone(u)
             print('get user:[{}]'.format(user))
+            user_keys = set(u.keys())
+            self.assertEqual(user_keys, default_db_keys)
 
     def test_get_setting_page(self):
         user_list = get_user_list()
