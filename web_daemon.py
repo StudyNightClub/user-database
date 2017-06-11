@@ -1,4 +1,4 @@
-#!/usr/local/bin/Python3
+#!/bin/python3
 
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 from flask import safe_join, make_response
@@ -45,18 +45,39 @@ def setting(user_id):
 
     log.debug('request form=[{}]'.format(request.form))
 
+    bool_key = ['filter_on', 'subscribe_water', 'subscribe_electricity', 'subscribe_road']
+
     if request.method == 'GET':
         user = {}
         with userdatabase.UserDBReader(db_path) as reader:
             user = reader.get_user(user_id)
         if user is None:
             return 'User [{}] is not found'.format(user_id)
-        else:
-            return render_template('setting_web.html', user=user, user_token=request.args.get('userToken',''))
+
+        # make boolean show checked in html checkbox
+        for key in bool_key:
+            if user[key] is True:
+                user[key] = 'checked'
+            else:
+                user[key] = ''
+
+        return render_template('setting_web.html',
+                user=user,
+                user_token=request.args.get('userToken', ''),
+                show_success=request.args.get('show_success', 'none'))
+
     elif request.method == 'POST':
+        form_keys = list(request.form.keys())
         update_data = {}
-        for k in request.form.keys():
+        for k in form_keys:
             update_data[k] = request.form[k]
+
+        #make checked become boolean in database
+        for key in bool_key:
+            if key in form_keys and request.form[key] == 'on':
+                update_data[key] = True
+            else:
+                update_data[key] = False
 
         row = {}
         with userdatabase.UserDBReader(db_path) as reader:
@@ -67,7 +88,8 @@ def setting(user_id):
         with userdatabase.UserDBWriter(db_path) as writer:
             writer.update_user(row)
 
-        return 'user_id=[%s] updated=[%s]' % (user_id, update_data)
+        return redirect(request.url + '&show_success=block')
+
     else:
         return 'not support method=[%s]'.format(request.method)
 
@@ -188,7 +210,7 @@ def token_check(request):
 if __name__ == '__main__':
     auth_token = token_load()
     set_logger()
-    daemonize()
+    #daemonize()
     app.run(host='0.0.0.0', port=8888, debug=True, threaded=True)
 
 

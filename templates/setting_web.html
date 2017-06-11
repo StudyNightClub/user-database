@@ -25,6 +25,9 @@
 
 <div class="container">
 
+<!-- Success message -->
+<legend><div class="alert alert-warning text-center" role="alert" id="success_message" style="display:{{show_success}}"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div></legend>
+
 <form class="well form-horizontal" action="/setting/{{user.id}}?userToken={{user_token}}" method="post">
 <fieldset>
 
@@ -59,7 +62,7 @@
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-	<input type="text" id="interest_distinct" name="interest_distinct" value="{{user.interest_distinct}}" class="form-control">
+	<input type="text" id="interest_district" name="interest_district" value="{{user.interest_district}}" class="form-control">
 	</div>
 	</div>
 </div>
@@ -92,7 +95,7 @@
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
-	<input type="text" id="office_distinct" name="office_distinct" value="{{user.office_distinct}}" class="form-control">
+	<input type="text" id="office_district" name="office_district" value="{{user.office_district}}" class="form-control">
 	</div>
 	</div>
 </div>
@@ -143,23 +146,23 @@
     <div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
 	<li class="list-group-item">
-		停水通知
+		停水通知 (關/開)
 		<div class="material-switch pull-right">
-			<input id="subscribe_water" name="subscribe_water" type="checkbox" checked/>
+			<input id="subscribe_water" name="subscribe_water" type="checkbox" value="on" {{user.subscribe_water}}/>
 			<label for="subscribe_water" class="label-default"></label>
 		</div>
 	</li>
 	<li class="list-group-item">
-		停電通知
+		停電通知 (關/開)
 		<div class="material-switch pull-right">
-			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" checked/>
+			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" value="on" {{user.subscribe_electricity}}/>
 			<label for="subscribe_electricity" class="label-default"></label>
 		</div>
 	</li>
 	<li class="list-group-item">
-		道路施工通知
+		道路施工通知 (關/開)
 		<div class="material-switch pull-right">
-			<input id="subscribe_road" name="subscribe_road" type="checkbox" checked/>
+			<input id="subscribe_road" name="subscribe_road" type="checkbox" value="on" {{user.subscribe_road}}/>
 			<label for="subscribe_road" class="label-default"></label>
 		</div>
 	</li>
@@ -167,18 +170,21 @@
 	</div>
 </div>
 
-<!-- Select Basic -->
+<!-- Checkbox List -->
 <div class="form-group"> 
   <label class="col-md-4 control-label">勿擾時過濾通知:</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
-    <select id="filter_on" name="filter_on" value="{{user.filter_on}}" class="form-control selectpicker" >
-		<option value="false">否</option>
-		<option value="true">是</option>
-    </select>
+    <li class="list-group-item">
+	(否/是)
+		<div class="material-switch pull-right">
+			<input id="filter_on" name="filter_on" type="checkbox" value="on" {{user.filter_on}}/>
+			<label for="filter_on" class="label-default"></label>
+		</div>
+	</li>
 	</div>
-</div>
+	</div>
 </div>
 
 <!-- Clock picker -->
@@ -214,9 +220,8 @@
 	</div>
 </div>
 
-<!-- Success message
-<div class="alert alert-success" role="alert" id="success_message"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div>
--->
+
+
 
 </fieldset>
 </form>
