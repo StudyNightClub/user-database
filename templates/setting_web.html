@@ -17,6 +17,8 @@
 <script src="/templates/js/jquery-clockpicker.js"></script>
 <script src="/templates/js/jquery-clockpicker.min.js"></script>
 
+<!-- For bootstrap material-switch-->
+<link rel="stylesheet" href="/templates/css/bootstrap-material-switch.css" />
 
 <html>
 <body>
@@ -134,20 +136,35 @@
 	</div>
 </div>
 
-<!-- Select Basic -->
+<!-- Checkbox List -->
 <div class="form-group"> 
-  <label class="col-md-4 control-label">通知類型:</label>
+  <label class="col-md-4 control-label">通知項目:</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select id="subscribe_type" name="subscribe_type" value="{{user.subscribe_type}}" class="form-control selectpicker" >
-		<option value="all">全部</option>
-		<option value="water">停水</option>
-		<option value="electricity">停電</option>
-		<option value="road">道路施工</option>
-    </select>
+	<li class="list-group-item">
+		停水通知
+		<div class="material-switch pull-right">
+			<input id="subscribe_water" name="subscribe_water" type="checkbox" checked/>
+			<label for="subscribe_water" class="label-default"></label>
+		</div>
+	</li>
+	<li class="list-group-item">
+		停電通知
+		<div class="material-switch pull-right">
+			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" checked/>
+			<label for="subscribe_electricity" class="label-default"></label>
+		</div>
+	</li>
+	<li class="list-group-item">
+		道路施工通知
+		<div class="material-switch pull-right">
+			<input id="subscribe_road" name="subscribe_road" type="checkbox" checked/>
+			<label for="subscribe_road" class="label-default"></label>
+		</div>
+	</li>
 	</div>
-</div>
+	</div>
 </div>
 
 <!-- Select Basic -->
@@ -156,7 +173,7 @@
     <div class="col-md-4 selectContainer">
     <div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
-    <select id="subscribe_type" id="filter_on" name="filter_on" value="{{user.filter_on}}" class="form-control selectpicker" >
+    <select id="filter_on" name="filter_on" value="{{user.filter_on}}" class="form-control selectpicker" >
 		<option value="false">否</option>
 		<option value="true">是</option>
     </select>
@@ -193,12 +210,13 @@
 <div class="form-group">
 	<label class="col-md-4 control-label"></label>
 	<div class="col-md-4 text-center">
-	<button type="submit" class="btn btn-primary">儲存變更<span class="glyphicon glyphicon-send"></span></button>
+	<button type="submit" class="btn btn-success">儲存變更<span class="glyphicon glyphicon-send"></span></button>
 	</div>
 </div>
 
-<!-- Success message -->
+<!-- Success message
 <div class="alert alert-success" role="alert" id="success_message"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div>
+-->
 
 </fieldset>
 </form>
