@@ -4,6 +4,7 @@ from flask import Flask, session, redirect, url_for, escape, request, render_tem
 from flask import safe_join, make_response
 import userdatabase
 import logging
+import urllib
 import json
 import os
 
@@ -84,6 +85,13 @@ def setting(user_id):
             row = reader.get_user(user_id)
 
         row.update(update_data)
+
+        # get geo cord by address
+        geocord = address_to_geocord(
+                update_data['interest_city']+update_data['interest_district']+update_data['interest_road'])
+
+        if geocord:
+            row.update(geocord)
 
         with userdatabase.UserDBWriter(db_path) as writer:
             writer.update_user(row)
@@ -175,6 +183,33 @@ def user(user_id):
     else:
         return 'not support method=[%s]'.format(request.method)
 
+def address_to_geocord(address):
+    #address = '台北市中山區民生東路一段'
+    geocord = {
+            'longitude': 0.0,
+            'latitude': 0.0
+            }
+
+    if not address:
+        return geocord
+
+    url_address = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + urllib.parse.quote(address) + '&sensor=false&language=zh-tw'
+
+    req = urllib.request.Request(url_address)
+    resp = urllib.request.urlopen(req)
+
+    if resp.code != 200:
+        return None
+
+    location = json.loads(resp.read().decode('utf-8'))
+
+    if location['status'] == 'ZERO_RESULTS':
+        return None
+
+    print(location['results'][0]['geometry']['location'])
+    geocord['longitude'] = location['results'][0]['geometry']['location']['lng']
+    geocord['latitude'] = location['results'][0]['geometry']['location']['lat']
+    return geocord
 
 def daemonize(setsid = True):
     import os, time, sys

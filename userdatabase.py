@@ -23,10 +23,12 @@ def get_default_row():
             'subscribe_electricity': True,
             'subscribe_road': True,
             'feedback': '',
-            'filter_on': True,
+            'filter_on': False,
             'active_notify': '17:00',
+
             # hidden column
-            # longitude, latitude
+            'longitude': 0.0,
+            'latitude': 0.0,
     }
 
 
