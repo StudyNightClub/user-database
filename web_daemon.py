@@ -122,7 +122,7 @@ def user(user_id):
 
     elif request.method == 'POST':
         row  = {}
-        print('This is POST data=[%s]' % request.form['data'])
+        log.debug('This is POST data=[%s]' % request.form['data'])
         with userdatabase.UserDBReader(db_path) as reader:
             row = reader.get_user(user_id)
 
@@ -206,7 +206,7 @@ def address_to_geocord(address):
     if location['status'] == 'ZERO_RESULTS':
         return None
 
-    print(location['results'][0]['geometry']['location'])
+    log.debug(location['results'][0]['geometry']['location'])
     geocord['longitude'] = location['results'][0]['geometry']['location']['lng']
     geocord['latitude'] = location['results'][0]['geometry']['location']['lat']
     return geocord
@@ -243,9 +243,12 @@ def token_check(request):
         return False
 
 if __name__ == '__main__':
+    import sys
+    sys.stdout = open('daemon.out', 'w')
+    sys.stderr = open('daemon.err', 'w')
     auth_token = token_load()
     set_logger()
-    #daemonize()
+    daemonize()
     app.run(host='0.0.0.0', port=8888, debug=True, threaded=True)
 
 
