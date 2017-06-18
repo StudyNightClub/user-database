@@ -36,7 +36,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">暱稱</label>  
+	<label class="col-md-4 control-label">暱稱</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -47,7 +47,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">通知區域(市):</label>  
+	<label class="col-md-4 control-label">通知區域(市):</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -58,7 +58,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">通知區域(區):</label>  
+	<label class="col-md-4 control-label">通知區域(區):</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -69,7 +69,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">通知區域(路):</label>  
+	<label class="col-md-4 control-label">通知區域(路):</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -80,7 +80,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">工作區域(市):</label>  
+	<label class="col-md-4 control-label">工作區域(市):</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
@@ -91,7 +91,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">工作區域(區):</label>  
+	<label class="col-md-4 control-label">工作區域(區):</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
@@ -102,7 +102,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">工作區域(路):</label>  
+	<label class="col-md-4 control-label">工作區域(路):</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
@@ -112,12 +112,12 @@
 </div>
 
 <!-- Clock picker -->
-<div class="form-group"> 
+<div class="form-group">
 	<label class="col-md-4 control-label">勿擾區間(起始):</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-	<input type="text" id="undisturbed_start" name="undisturbed_start" value="{{user.undisturbed_start}}" class="form-control">
+	<input type="text" id="undisturbed_start" name="undisturbed_start" value="{{user.undisturbed_start}}" class="form-control" onfocus="blur()">
 	</div>
 	<script type="text/javascript">
 	$('.clockpicker').clockpicker();
@@ -126,12 +126,12 @@
 </div>
 
 <!-- Clock picker -->
-<div class="form-group"> 
+<div class="form-group">
 	<label class="col-md-4 control-label">勿擾區間(結束):</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-	<input type="text" id="undisturbed_end" name="undisturbed_end" value="{{user.undisturbed_end}}" class="form-control">
+	<input type="text" id="undisturbed_end" name="undisturbed_end" value="{{user.undisturbed_end}}" class="form-control" onfocus="blur()">
 	</div>
 	<script type="text/javascript">
 	$('.clockpicker').clockpicker();
@@ -140,7 +140,7 @@
 </div>
 
 <!-- Checkbox List -->
-<div class="form-group"> 
+<div class="form-group">
   <label class="col-md-4 control-label">通知項目:</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
@@ -149,21 +149,21 @@
 		停水通知 (關/開)
 		<div class="material-switch pull-right">
 			<input id="subscribe_water" name="subscribe_water" type="checkbox" value="on" {{user.subscribe_water}}/>
-			<label for="subscribe_water" class="label-default"></label>
+			<label for="subscribe_water" class="label-info"></label>
 		</div>
 	</li>
 	<li class="list-group-item">
 		停電通知 (關/開)
 		<div class="material-switch pull-right">
 			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" value="on" {{user.subscribe_electricity}}/>
-			<label for="subscribe_electricity" class="label-default"></label>
+			<label for="subscribe_electricity" class="label-info"></label>
 		</div>
 	</li>
 	<li class="list-group-item">
 		道路施工通知 (關/開)
 		<div class="material-switch pull-right">
 			<input id="subscribe_road" name="subscribe_road" type="checkbox" value="on" {{user.subscribe_road}}/>
-			<label for="subscribe_road" class="label-default"></label>
+			<label for="subscribe_road" class="label-info"></label>
 		</div>
 	</li>
 	</div>
@@ -171,7 +171,7 @@
 </div>
 
 <!-- Checkbox List -->
-<div class="form-group"> 
+<div class="form-group">
   <label class="col-md-4 control-label">勿擾時過濾通知:</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
@@ -180,7 +180,7 @@
 	(否/是)
 		<div class="material-switch pull-right">
 			<input id="filter_on" name="filter_on" type="checkbox" value="on" {{user.filter_on}}/>
-			<label for="filter_on" class="label-default"></label>
+			<label for="filter_on" class="label-info"></label>
 		</div>
 	</li>
 	</div>
@@ -188,12 +188,12 @@
 </div>
 
 <!-- Clock picker -->
-<div class="form-group"> 
+<div class="form-group">
 	<label class="col-md-4 control-label">主動通知時間:</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-	<input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}" class="form-control">
+	<input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}" class="form-control" onfocus="blur()">
 	</div>
 	<script type="text/javascript">
 	$('.clockpicker').clockpicker();
