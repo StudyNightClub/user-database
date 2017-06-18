@@ -2,6 +2,7 @@
 
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 from flask import safe_join, make_response
+from urllib.request import Request, urlopen
 import userdatabase
 import logging
 import urllib
@@ -96,8 +97,18 @@ def setting(user_id):
         with userdatabase.UserDBWriter(db_path) as writer:
             writer.update_user(row)
 
+        # send webapi to linebot for poke
+        post_data = json.dumps({'userId': user_id}).encode('utf-8')
+        req = Request(
+                headers={"Content-Type": "application/json" },
+                url='https://glacial-falls-53180.herokuapp.com/setting/webhook',
+                method='POST',
+                data=post_data
+                )
+        resp = urlopen(req)
+        log.debug('resp.getcode():{}'.format(resp.getcode()))
+        log.debug('resp.read():{}'.format(resp.read()))
         return redirect(request.url + '&show_success=1000')
-
     else:
         return 'not support method=[%s]'.format(request.method)
 

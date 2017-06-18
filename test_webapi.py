@@ -173,17 +173,17 @@ class TestWebapi(unittest.TestCase):
 
     def test_api_post_after_user_update(self):
         data={'userId': 'test_user_id'}
-        post_data = {'data': json.dumps(data)}
-        post_enc_data = urlencode(post_data).encode('utf-8')
+        post_data = json.dumps(data).encode('utf-8')
 
         req = Request(
+                headers={"Content-Type": "application/json" },
                 url='https://glacial-falls-53180.herokuapp.com/setting/webhook',
                 method='POST',
-                data=post_enc_data
+                data=post_data
                 )
         resp = urlopen(req)
-        self.assertTrue(200==resp.getcode())
-        self.assertTrue(b'{}'==resp.read())
+        self.assertEqual(200, resp.getcode())
+        self.assertEqual(b'{}', resp.read())
 
 if '__main__' == __name__:
     load_token()
