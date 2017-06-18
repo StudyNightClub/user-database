@@ -65,7 +65,7 @@ def setting(user_id):
         return render_template('setting_web.html',
                 user=user,
                 user_token=request.args.get('userToken', ''),
-                show_success=request.args.get('show_success', 'none'))
+                success_msg_time=request.args.get('show_success', '-1'))
 
     elif request.method == 'POST':
         form_keys = list(request.form.keys())
@@ -96,7 +96,7 @@ def setting(user_id):
         with userdatabase.UserDBWriter(db_path) as writer:
             writer.update_user(row)
 
-        return redirect(request.url + '&show_success=block')
+        return redirect(request.url + '&show_success=1000')
 
     else:
         return 'not support method=[%s]'.format(request.method)

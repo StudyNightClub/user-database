@@ -21,12 +21,27 @@
 <link rel="stylesheet" href="/templates/css/bootstrap-material-switch.css" />
 
 <html>
-<body>
+<body onload="success_msg_timer=setInterval(success_msg_fadeout, 1);">
 
 <div class="container">
 
 <!-- Success message -->
-<legend><div class="alert alert-warning text-center" role="alert" id="success_message" style="display:{{show_success}}"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div></legend>
+<legend><div class="alert alert-warning text-center" role="alert" id="success_message" style="display:none"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div></legend>
+
+<script>
+var timer_total_count = {{success_msg_time}};
+var timer_count = timer_total_count;
+function success_msg_fadeout() {
+	if (timer_count > 0) {
+		document.getElementById("success_message").style.display="block";
+		document.getElementById("success_message").style.opacity=(timer_count/timer_total_count);
+		timer_count--;
+	} else {
+		document.getElementById("success_message").style.display="none";
+		clearInterval(success_msg_timer);
+	}
+}
+</script>
 
 <form class="well form-horizontal" action="/setting/{{user.id}}?userToken={{user_token}}" method="post">
 <fieldset>
