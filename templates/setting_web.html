@@ -26,7 +26,7 @@
 <div class="container">
 
 <!-- Success message -->
-<legend><div class="alert alert-warning text-center" role="alert" id="success_message" style="display:none"><i class="glyphicon glyphicon-thumbs-up"></i> 成功更改個人設定</div></legend>
+<legend><div class="alert alert-warning text-center" role="alert" id="success_message" style="display:none"><i class="glyphicon glyphicon-thumbs-up"></i>成功更改個人設定</div></legend>
 
 <script>
 var timer_total_count = {{success_msg_time}};
@@ -62,7 +62,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你感興趣的城市 (市):</label>
+	<label class="col-md-4 control-label">你感興趣的城市  ( 市 )</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -73,7 +73,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你感興趣的地區 (區):</label>
+	<label class="col-md-4 control-label">你感興趣的地區  ( 區 )</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -84,7 +84,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你感興趣的路名 (路段巷弄):</label>
+	<label class="col-md-4 control-label">你感興趣的路名  ( 路段巷弄 ) </label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -95,7 +95,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你工作的城市 (市):</label>
+	<label class="col-md-4 control-label">你工作的城市  ( 市 )</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
@@ -106,7 +106,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你工作的地區 (區):</label>
+	<label class="col-md-4 control-label">你工作的地區  ( 區 )</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
@@ -117,7 +117,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你工作的路名 (路段巷弄):</label>
+	<label class="col-md-4 control-label">你工作的路名  ( 路段巷弄 )</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
@@ -126,9 +126,57 @@ function success_msg_fadeout() {
 	</div>
 </div>
 
+<!-- Checkbox List -->
+<div class="form-group">
+  <label class="col-md-4 control-label">你想收到的公告類型</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+	<li class="list-group-item">
+		停水  ( 關 - 開 )
+		<div class="material-switch pull-right">
+			<input id="subscribe_water" name="subscribe_water" type="checkbox" value="on" {{user.subscribe_water}}/>
+			<label for="subscribe_water" class="label-info"></label>
+		</div>
+	</li>
+	<li class="list-group-item">
+		停電  ( 關 - 開 )
+		<div class="material-switch pull-right">
+			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" value="on" {{user.subscribe_electricity}}/>
+			<label for="subscribe_electricity" class="label-info"></label>
+		</div>
+	</li>
+	<li class="list-group-item">
+		道路施工  ( 關 - 開 )
+		<div class="material-switch pull-right">
+			<input id="subscribe_road" name="subscribe_road" type="checkbox" value="on" {{user.subscribe_road}}/>
+			<label for="subscribe_road" class="label-info"></label>
+		</div>
+	</li>
+	</div>
+	</div>
+</div>
+
+<!-- Checkbox List -->
+<div class="form-group">
+  <label class="col-md-4 control-label">不想收到通知的時間設定開關</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
+    <li class="list-group-item">
+		( 關 - 開 )
+		<div class="material-switch pull-right">
+			<input id="filter_on" name="filter_on" type="checkbox" value="on" {{user.filter_on}}/>
+			<label for="filter_on" class="label-info"></label>
+		</div>
+	</li>
+	</div>
+	</div>
+</div>
+
 <!-- Clock picker -->
 <div class="form-group">
-	<label class="col-md-4 control-label">不接收通知的時間(開始):</label>
+	<label class="col-md-4 control-label">不想收到通知的時間  ( 開始 )</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
@@ -142,7 +190,7 @@ function success_msg_fadeout() {
 
 <!-- Clock picker -->
 <div class="form-group">
-	<label class="col-md-4 control-label">不接收通知的時間(結束):</label>
+	<label class="col-md-4 control-label">不想收到通知的時間  ( 結束 )</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
@@ -154,57 +202,9 @@ function success_msg_fadeout() {
 	</div>
 </div>
 
-<!-- Checkbox List -->
-<div class="form-group">
-  <label class="col-md-4 control-label">你想接收的公告類型:</label>
-    <div class="col-md-4 selectContainer">
-    <div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-	<li class="list-group-item">
-		停水 (關 - 開)
-		<div class="material-switch pull-right">
-			<input id="subscribe_water" name="subscribe_water" type="checkbox" value="on" {{user.subscribe_water}}/>
-			<label for="subscribe_water" class="label-info"></label>
-		</div>
-	</li>
-	<li class="list-group-item">
-		停電 (關 - 開)
-		<div class="material-switch pull-right">
-			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" value="on" {{user.subscribe_electricity}}/>
-			<label for="subscribe_electricity" class="label-info"></label>
-		</div>
-	</li>
-	<li class="list-group-item">
-		道路施工 (關 - 開)
-		<div class="material-switch pull-right">
-			<input id="subscribe_road" name="subscribe_road" type="checkbox" value="on" {{user.subscribe_road}}/>
-			<label for="subscribe_road" class="label-info"></label>
-		</div>
-	</li>
-	</div>
-	</div>
-</div>
-
-<!-- Checkbox List -->
-<div class="form-group">
-  <label class="col-md-4 control-label">不接收通知時過濾通知:</label>
-    <div class="col-md-4 selectContainer">
-    <div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
-    <li class="list-group-item">
-	(否 - 是)
-		<div class="material-switch pull-right">
-			<input id="filter_on" name="filter_on" type="checkbox" value="on" {{user.filter_on}}/>
-			<label for="filter_on" class="label-info"></label>
-		</div>
-	</li>
-	</div>
-	</div>
-</div>
-
 <!-- Clock picker -->
 <div class="form-group">
-	<label class="col-md-4 control-label">你想接收通知的時間:</label>
+	<label class="col-md-4 control-label">你想提早收到通知的時間</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
@@ -218,7 +218,7 @@ function success_msg_fadeout() {
 
 <!-- Text area -->
 <div class="form-group">
-	<label class="col-md-4 control-label">你想說的話:</label>
+	<label class="col-md-4 control-label">你想說的話</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
@@ -244,3 +244,4 @@ function success_msg_fadeout() {
 
 </body>
 </html>
+
