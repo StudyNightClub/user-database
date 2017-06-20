@@ -50,6 +50,17 @@ function success_msg_fadeout() {
 <legend>編輯個人化設定</legend>
 
 <!-- Text input-->
+<div class="form-group" style="display:none">
+	<label class="col-md-4 control-label">你的稱呼</label>
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+	<input type="text" id="name" name="name" value="{{user.name}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
 <div class="form-group">
 	<label class="col-md-4 control-label">感興趣的縣市</label>
 	<div class="col-md-4 inputGroupContainer">
@@ -82,6 +93,39 @@ function success_msg_fadeout() {
 	</div>
 </div>
 
+<!-- Text input-->
+<div class="form-group" style="display:none">
+	<label class="col-md-4 control-label">你工作的城市  ( 市 )</label>
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+	<input type="text" id="office_city" name="office_city" value="{{user.office_city}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group" style="display:none">
+	<label class="col-md-4 control-label">你工作的地區  ( 區 )</label>
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+	<input type="text" id="office_district" name="office_district" value="{{user.office_district}}" class="form-control">
+	</div>
+	</div>
+</div>
+
+<!-- Text input-->
+<div class="form-group" style="display:none">
+	<label class="col-md-4 control-label">你工作的路名  ( 路段巷弄 )</label>
+	<div class="col-md-4 inputGroupContainer">
+	<div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+	<input type="text" id="office_road" name="office_road" value="{{user.office_road}}" class="form-control">
+	</div>
+	</div>
+</div>
+
 <!-- Checkbox List -->
 <div class="form-group">
   <label class="col-md-4 control-label">想看的公告類型</label>
@@ -107,6 +151,23 @@ function success_msg_fadeout() {
 		<div class="material-switch pull-right">
 			<input id="subscribe_road" name="subscribe_road" type="checkbox" value="on" {{user.subscribe_road}}/>
 			<label for="subscribe_road" class="label-info"></label>
+		</div>
+	</li>
+	</div>
+	</div>
+</div>
+
+<!-- Checkbox List -->
+<div class="form-group" style="display:none">
+  <label class="col-md-4 control-label">不想收到通知的時間設定開關</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
+    <li class="list-group-item">
+		( 關 - 開 )
+		<div class="material-switch pull-right">
+			<input id="filter_on" name="filter_on" type="checkbox" value="on" {{user.filter_on}}/>
+			<label for="filter_on" class="label-info"></label>
 		</div>
 	</li>
 	</div>
