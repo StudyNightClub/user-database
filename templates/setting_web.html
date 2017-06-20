@@ -51,18 +51,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你的稱呼</label>
-	<div class="col-md-4 inputGroupContainer">
-	<div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-	<input type="text" id="name" name="name" value="{{user.name}}" class="form-control">
-	</div>
-	</div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-	<label class="col-md-4 control-label">你感興趣的城市  ( 市 )</label>
+	<label class="col-md-4 control-label">感興趣的縣市</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -73,7 +62,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你感興趣的地區  ( 區 )</label>
+	<label class="col-md-4 control-label">感興趣的行政區</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -84,7 +73,7 @@ function success_msg_fadeout() {
 
 <!-- Text input-->
 <div class="form-group">
-	<label class="col-md-4 control-label">你感興趣的路名  ( 路段巷弄 ) </label>
+	<label class="col-md-4 control-label">感興趣的地址</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
@@ -93,61 +82,28 @@ function success_msg_fadeout() {
 	</div>
 </div>
 
-<!-- Text input-->
-<div class="form-group">
-	<label class="col-md-4 control-label">你工作的城市  ( 市 )</label>
-	<div class="col-md-4 inputGroupContainer">
-	<div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
-	<input type="text" id="office_city" name="office_city" value="{{user.office_city}}" class="form-control">
-	</div>
-	</div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-	<label class="col-md-4 control-label">你工作的地區  ( 區 )</label>
-	<div class="col-md-4 inputGroupContainer">
-	<div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
-	<input type="text" id="office_district" name="office_district" value="{{user.office_district}}" class="form-control">
-	</div>
-	</div>
-</div>
-
-<!-- Text input-->
-<div class="form-group">
-	<label class="col-md-4 control-label">你工作的路名  ( 路段巷弄 )</label>
-	<div class="col-md-4 inputGroupContainer">
-	<div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
-	<input type="text" id="office_road" name="office_road" value="{{user.office_road}}" class="form-control">
-	</div>
-	</div>
-</div>
-
 <!-- Checkbox List -->
 <div class="form-group">
-  <label class="col-md-4 control-label">你想收到的公告類型</label>
+  <label class="col-md-4 control-label">想看的公告類型</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
 	<li class="list-group-item">
-		停水  ( 關 - 開 )
+		停水
 		<div class="material-switch pull-right">
 			<input id="subscribe_water" name="subscribe_water" type="checkbox" value="on" {{user.subscribe_water}}/>
 			<label for="subscribe_water" class="label-info"></label>
 		</div>
 	</li>
 	<li class="list-group-item">
-		停電  ( 關 - 開 )
+		停電
 		<div class="material-switch pull-right">
 			<input id="subscribe_electricity" name="subscribe_electricity" type="checkbox" value="on" {{user.subscribe_electricity}}/>
 			<label for="subscribe_electricity" class="label-info"></label>
 		</div>
 	</li>
 	<li class="list-group-item">
-		道路施工  ( 關 - 開 )
+		道路施工
 		<div class="material-switch pull-right">
 			<input id="subscribe_road" name="subscribe_road" type="checkbox" value="on" {{user.subscribe_road}}/>
 			<label for="subscribe_road" class="label-info"></label>
@@ -157,26 +113,23 @@ function success_msg_fadeout() {
 	</div>
 </div>
 
-<!-- Checkbox List -->
+<!-- Clock picker -->
 <div class="form-group">
-  <label class="col-md-4 control-label">不想收到通知的時間設定開關</label>
-    <div class="col-md-4 selectContainer">
-    <div class="input-group">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
-    <li class="list-group-item">
-		( 關 - 開 )
-		<div class="material-switch pull-right">
-			<input id="filter_on" name="filter_on" type="checkbox" value="on" {{user.filter_on}}/>
-			<label for="filter_on" class="label-info"></label>
-		</div>
-	</li>
+	<label class="col-md-4 control-label">主動通知時間</label>
+	<div class="col-md-4 selectContainer">
+	<div class="input-group clockpicker">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+	<input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}" class="form-control" onfocus="blur()">
 	</div>
+	<script type="text/javascript">
+	$('.clockpicker').clockpicker();
+	</script>
 	</div>
 </div>
 
 <!-- Clock picker -->
 <div class="form-group">
-	<label class="col-md-4 control-label">不想收到通知的時間  ( 開始 )</label>
+	<label class="col-md-4 control-label">勿擾開始時間</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
@@ -190,7 +143,7 @@ function success_msg_fadeout() {
 
 <!-- Clock picker -->
 <div class="form-group">
-	<label class="col-md-4 control-label">不想收到通知的時間  ( 結束 )</label>
+	<label class="col-md-4 control-label">勿擾結束時間</label>
 	<div class="col-md-4 selectContainer">
 	<div class="input-group clockpicker">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
@@ -202,23 +155,9 @@ function success_msg_fadeout() {
 	</div>
 </div>
 
-<!-- Clock picker -->
-<div class="form-group">
-	<label class="col-md-4 control-label">你想提早收到通知的時間</label>
-	<div class="col-md-4 selectContainer">
-	<div class="input-group clockpicker">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-	<input type="text" id="active_notify" name="active_notify" value="{{user.active_notify}}" class="form-control" onfocus="blur()">
-	</div>
-	<script type="text/javascript">
-	$('.clockpicker').clockpicker();
-	</script>
-	</div>
-</div>
-
 <!-- Text area -->
 <div class="form-group">
-	<label class="col-md-4 control-label">你想說的話</label>
+	<label class="col-md-4 control-label">建議與回報</label>
 	<div class="col-md-4 inputGroupContainer">
 	<div class="input-group">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
