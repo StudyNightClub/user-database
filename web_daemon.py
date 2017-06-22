@@ -7,10 +7,11 @@ import userdatabase
 import logging
 import urllib
 import json
+import sys
 import os
 
 app = Flask(__name__)
-log = logging.getLogger('werkzeug')
+log = logging.getLogger()
 
 db_path = 'userdata.db'
 
@@ -235,10 +236,16 @@ def daemonize(setsid = True):
     pid = os.fork()
     if 0 != pid: exit(0)
 
-def set_logger():
-    logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s")
-    handler = logging.FileHandler('daemon.log')
-    log = logging.getLogger('werkzeug')
+    set_daemon_logger()
+
+
+def set_daemon_logger():
+    from logging.handlers import RotatingFileHandler
+    handler = RotatingFileHandler('daemon.log', maxBytes=1024*1024*10, backupCount=5)
+    handler.setFormatter(logging.Formatter(fmt="%(asctime)s %(levelname)-8s %(message)s"))
+
+    log = logging.getLogger()
+    log.handlers = []
     log.setLevel(logging.DEBUG)
     log.addHandler(handler)
 
@@ -253,12 +260,23 @@ def token_check(request):
     else:
         return False
 
+class StreamToLogger(object):
+    '''
+    Fake file-like stream object that redirects writes to a logger instance.
+    '''
+    def __init__(self, logger, log_level=logging.INFO):
+        self.logger = logger
+        self.log_level = log_level
+
+    def write(self, buf):
+        for line in buf.rstrip().splitlines():
+            self.logger.log(self.log_level, line.rstrip())
+
+    def flush(self):
+        pass
+
 if __name__ == '__main__':
-    import sys
-    sys.stdout = open('daemon.out', 'w')
-    sys.stderr = open('daemon.err', 'w')
     auth_token = token_load()
-    set_logger()
     daemonize()
     app.run(host='0.0.0.0', port=8888, debug=True, threaded=True)
 
